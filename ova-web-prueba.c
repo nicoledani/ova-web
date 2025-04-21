@@ -133,8 +133,6 @@ void validar_respuesta_por_indice(const char* id, int indice) {
     free(buffer);
 }
 
-
-
 int main() {
     // Leer pregunta desde archivo local
     char *json_pregunta = leer_json_completo("test_pregunta.json");
