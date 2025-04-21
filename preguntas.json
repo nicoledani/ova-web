@@ -1,0 +1,35 @@
+[{
+		"id":	"1",
+		"pregunta":	"<div style='text-align: center; font-weight: bold;'>Texto centrado y en negrita</div>",
+		"opciones":	[{
+				"valor":	"text-align: center; font-weight: bold;",
+				"esCorrecta":	true
+			}, {
+				"valor":	"text-align: left; font-style: italic;",
+				"esCorrecta":	false
+			}, {
+				"valor":	"font-weight: normal; text-align: right;",
+				"esCorrecta":	false
+			}, {
+				"valor":	"display: flex; justify-content: left;",
+				"esCorrecta":	false
+			}],
+		"respuesta_correcta":	"text-align: center; font-weight: bold;"
+	}, {
+		"id":	"1",
+		"pregunta":	"<div style='text-align: center; font-weight: bold;'>Texto centrado y en negrita</div>",
+		"opciones":	[{
+				"valor":	"text-align: center; font-weight: bold;",
+				"esCorrecta":	true
+			}, {
+				"valor":	"text-align: left; font-style: italic;",
+				"esCorrecta":	false
+			}, {
+				"valor":	"font-weight: normal; text-align: right;",
+				"esCorrecta":	false
+			}, {
+				"valor":	"display: flex; justify-content: left;",
+				"esCorrecta":	false
+			}],
+		"respuesta_correcta":	"text-align: center; font-weight: bold;"
+	}]
