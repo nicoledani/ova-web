@@ -7,21 +7,31 @@
 #define FILE_PATH "preguntas.json"
 #define BUFFER_SIZE 10000
 
-void guardar_pregunta(const char* json_str) {
-    FILE* file = fopen(FILE_PATH, "a+");
+char* leer_json_completo(const char *filename) {
+    FILE *file = fopen(filename, "r");
     if (!file) {
-        printf("Error al abrir el archivo\n");
-        return;
+        printf("Error al abrir el archivo: %s\n", filename);
+        return NULL;
     }
 
     fseek(file, 0, SEEK_END);
     long size = ftell(file);
     fseek(file, 0, SEEK_SET);
-    char* buffer = calloc(size + 1, sizeof(char));
+    char *buffer = calloc(size + 1, sizeof(char));
     fread(buffer, 1, size, file);
     fclose(file);
 
-    cJSON* root = cJSON_Parse(buffer);
+    return buffer;
+}
+
+void guardar_pregunta(const char* json_str) {
+    char* buffer = leer_json_completo(FILE_PATH);
+
+    cJSON* root = NULL;
+    if (buffer && strlen(buffer) > 0) {
+        root = cJSON_Parse(buffer);
+    }
+
     if (!root) {
         root = cJSON_CreateArray();
     }
@@ -30,7 +40,8 @@ void guardar_pregunta(const char* json_str) {
     cJSON_AddItemToArray(root, nueva_pregunta);
 
     char* nuevo_json = cJSON_Print(root);
-    file = fopen(FILE_PATH, "w");
+
+    FILE* file = fopen(FILE_PATH, "w");
     fputs(nuevo_json, file);
     fclose(file);
 
@@ -42,15 +53,11 @@ void guardar_pregunta(const char* json_str) {
 }
 
 void obtener_pregunta_aleatoria() {
-    FILE* file = fopen(FILE_PATH, "r");
-    if (!file) {
+    char* buffer = leer_json_completo(FILE_PATH);
+    if (!buffer) {
         printf("[]\n");
         return;
     }
-
-    char* buffer = calloc(BUFFER_SIZE, sizeof(char));
-    fread(buffer, 1, BUFFER_SIZE, file);
-    fclose(file);
 
     cJSON* array = cJSON_Parse(buffer);
     if (!cJSON_IsArray(array)) {
@@ -80,15 +87,11 @@ void obtener_pregunta_aleatoria() {
 }
 
 void validar_respuesta_por_indice(const char* id, int indice) {
-    FILE* file = fopen(FILE_PATH, "r");
-    if (!file) {
-        printf("{\"resultado\":false}\n");
+    char* buffer = leer_json_completo(FILE_PATH);
+    if (!buffer) {
+        printf("[]\n");
         return;
     }
-
-    char* buffer = calloc(BUFFER_SIZE, sizeof(char));
-    fread(buffer, 1, BUFFER_SIZE, file);
-    fclose(file);
 
     cJSON* array = cJSON_Parse(buffer);
     if (!cJSON_IsArray(array)) {
@@ -130,22 +133,7 @@ void validar_respuesta_por_indice(const char* id, int indice) {
     free(buffer);
 }
 
-char* leer_json_completo(const char *filename) {
-    FILE *file = fopen(filename, "r");
-    if (!file) {
-        printf("Error al abrir el archivo: %s\n", filename);
-        return NULL;
-    }
 
-    fseek(file, 0, SEEK_END);
-    long size = ftell(file);
-    fseek(file, 0, SEEK_SET);
-    char *buffer = calloc(size + 1, sizeof(char));
-    fread(buffer, 1, size, file);
-    fclose(file);
-
-    return buffer;
-}
 
 int main() {
     // Leer pregunta desde archivo local
