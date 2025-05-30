@@ -1,5 +1,5 @@
 {
-  "id": "1",
+  "id": "15",
   "pregunta": "<div style='text-align: center; font-weight: bold;'>Texto centrado y en negrita</div>",
   "opciones": [
     { "valor": "text-align: center; font-weight: bold;", "esCorrecta": true },

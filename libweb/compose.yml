@@ -1,0 +1,10 @@
+services:
+  spring-jni:
+    image: 'nicoledani/ova-web:latest'
+    ports:
+      - '8083:8080'
+    networks:
+      - red-backend-app
+networks:
+  red-backend-app:
+    driver: bridge
